@@ -1,4 +1,5 @@
-walk(document.body);
+(function(){
+var ignoredTagsRe = /(script|input|textarea)/i;
 
 function walk(node) {
 	// I stole this function from here:
@@ -19,7 +20,7 @@ function walk(node) {
 			break;
 
 		case 3: // Text node
-			if (node.parentElement.tagName.toLowerCase() != "script") {
+			if (!ignoredTagsRe.test(node.parentElement.tagName)) {
 				handleText(node);
 			}
 			break;
@@ -57,3 +58,8 @@ function handleText(textNode) {
 	}
 	textNode.nodeValue = v;
 }
+
+
+walk(document.body);
+
+}());
